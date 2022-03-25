@@ -31,9 +31,9 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     public ChoquePlanetas() {
         initComponents();
         this.setLocationRelativeTo(null);
-        actualizarCientificosComboBox();
         defaultPlanetas();
         loadCientificos();
+        actualizarCientificosComboBox();
     }
 
     /**
@@ -198,8 +198,8 @@ public class ChoquePlanetas extends javax.swing.JFrame {
             listaCientificos.add(cientifico);
             JOptionPane.showMessageDialog(null, "Cientifico Creado");
             nombreCientifico.setText(null);
-            cientificoGuardado();
             actualizarCientificosComboBox();
+            cientificoGuardado();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -248,7 +248,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
             planeta2 = (Planeta) selectedNode.getUserObject();
             planeta2TF.setText(planeta2.toString());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,e);
+            JOptionPane.showMessageDialog(null, e);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -289,6 +289,13 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     }
 
     public void defaultPlanetas() {
+        
+        PlanetaGaseoso saturno = new PlanetaGaseoso("Saturno", 30000, 300000, 560, 450);
+        listaPlanetas.add(saturno);
+        PlanetaGaseoso urano = new PlanetaGaseoso("Urano", 20000, 200000, 670, 690);
+        listaPlanetas.add(urano);
+        PlanetaGaseoso neptuno = new PlanetaGaseoso("Neptuno", 20000, 200000, 840, 900);
+        listaPlanetas.add(neptuno);
         PlanetaTerrestre mercurio = new PlanetaTerrestre("Mercurio", 13000, 5000, 400, 300);
         listaPlanetas.add(mercurio);
         PlanetaTerrestre venus = new PlanetaTerrestre("Venus", 15000, 100000, 640, 260);
@@ -299,12 +306,6 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         listaPlanetas.add(marte);
         PlanetaGaseoso jupiter = new PlanetaGaseoso("Jupiter", 40000, 400000, 340, 310);
         listaPlanetas.add(jupiter);
-        PlanetaGaseoso saturno = new PlanetaGaseoso("Saturno", 30000, 300000, 560, 450);
-        listaPlanetas.add(saturno);
-        PlanetaGaseoso urano = new PlanetaGaseoso("Urano", 20000, 200000, 670, 690);
-        listaPlanetas.add(urano);
-        PlanetaGaseoso neptuno = new PlanetaGaseoso("Neptuno", 20000, 200000, 840, 900);
-        listaPlanetas.add(neptuno);
 
     }
 
@@ -387,6 +388,6 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     private javax.swing.JCheckBox publicosCB;
     // End of variables declaration//GEN-END:variables
 Planeta planeta1;
-    Planeta planeta2;
-    HiloColision hiloColision;
+Planeta planeta2;
+HiloColision hiloColision;
 }
