@@ -293,8 +293,8 @@ public class ChoquePlanetas extends javax.swing.JFrame {
             DefaultMutableTreeNode root = new DefaultMutableTreeNode("Planetas");
             root.removeAllChildren();
             for (Planeta planeta : cientifico.getPlanetas()){
-                DefaultMutableTreeNode hojaPlaneta = new DefaultMutableTreeNode(planeta);
-                root.add(hojaPlaneta);
+                DefaultMutableTreeNode hijoPlaneta = new DefaultMutableTreeNode(planeta);
+                root.add(hijoPlaneta);
             }
 
             arbolModelo.setRoot(root);
@@ -307,8 +307,8 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     public void actualizarCientificosComboBox(){
         DefaultComboBoxModel modelo = (DefaultComboBoxModel)cientificosCB.getModel();
         modelo.removeAllElements();
-        for (Cientifico c : listaCientificos)
-            modelo.addElement(c);
+        for (Cientifico cientifico : listaCientificos)
+            modelo.addElement(cientifico);
     }
     
      private void loadCientificos(){
@@ -337,8 +337,8 @@ public class ChoquePlanetas extends javax.swing.JFrame {
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("./Cientificos"));
             for (Cientifico cientifico : listaCientificos)
                 os.writeObject(cientifico);
-        }catch(Exception ex){
-            System.out.println(ex);
+        }catch(IOException e){
+            System.out.println(e);
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
         }
     }
