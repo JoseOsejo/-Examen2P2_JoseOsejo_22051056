@@ -25,7 +25,6 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     /**
      * Creates new form ChoquePlanetas
      */
-    
     ArrayList<Planeta> listaPlanetas = new ArrayList();
     ArrayList<Cientifico> listaCientificos = new ArrayList();
 
@@ -54,8 +53,8 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         arbolPlanetas = new javax.swing.JTree();
         publicosCB = new javax.swing.JCheckBox();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        planeta1TF = new javax.swing.JTextField();
+        planeta2TF = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         cientificosCB = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -72,10 +71,17 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         Planetas.add(jMenuItem1);
 
         jMenuItem2.setText("Planeta 2");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         Planetas.add(jMenuItem2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        arbolPlanetas.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         arbolPlanetas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 arbolPlanetasMouseClicked(evt);
@@ -125,8 +131,8 @@ public class ChoquePlanetas extends javax.swing.JFrame {
                             .addComponent(publicosCB))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField1)
+                            .addComponent(planeta2TF)
+                            .addComponent(planeta1TF)
                             .addComponent(jLabel1)
                             .addComponent(cientificosCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2)
@@ -149,9 +155,9 @@ public class ChoquePlanetas extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(37, 37, 37)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(planeta1TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(planeta2TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(34, 34, 34)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -185,15 +191,15 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
- if (nombreCientifico.getText().isEmpty()){
-        }else{
+        if (nombreCientifico.getText().isEmpty()) {
+        } else {
             String nombre = nombreCientifico.getText();
             Cientifico cientifico = new Cientifico(nombre);
             listaCientificos.add(cientifico);
             JOptionPane.showMessageDialog(null, "Cientifico Creado");
             nombreCientifico.setText(null);
-            actualizarCientificosComboBox();
             cientificoGuardado();
+            actualizarCientificosComboBox();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -207,28 +213,45 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     }//GEN-LAST:event_arbolPlanetasMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        try {
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) arbolPlanetas.getLastSelectedPathComponent();
+            planeta1 = (Planeta) selectedNode.getUserObject();
+            planeta1TF.setText(planeta1.toString());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void publicosCBStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_publicosCBStateChanged
 
-      if(publicosCB.isSelected()){
-          setTreeVisible();
-      }
+        if (publicosCB.isSelected()) {
+            setTreeVisible();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_publicosCBStateChanged
 
     private void cientificosCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cientificosCBItemStateChanged
 
-        
-        if(evt.getStateChange() == 2){
+        if (evt.getStateChange() == 2) {
             planetasDescubiertosCientificos();
         }
-        if(publicosCB.isSelected()){
+        if (publicosCB.isSelected()) {
             publicosCB.setSelected(false);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_cientificosCBItemStateChanged
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) arbolPlanetas.getLastSelectedPathComponent();
+            planeta2 = (Planeta) selectedNode.getUserObject();
+            planeta2TF.setText(planeta2.toString());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,e);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -284,60 +307,63 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         listaPlanetas.add(neptuno);
 
     }
-    
-     public void planetasDescubiertosCientificos(){
-        try{
+
+    public void planetasDescubiertosCientificos() {
+        try {
             Cientifico cientifico = (Cientifico) cientificosCB.getSelectedItem();
 
-            DefaultTreeModel arbolModelo = (DefaultTreeModel)arbolPlanetas.getModel();
+            DefaultTreeModel arbolModelo = (DefaultTreeModel) arbolPlanetas.getModel();
             DefaultMutableTreeNode root = new DefaultMutableTreeNode("Planetas");
             root.removeAllChildren();
-            for (Planeta planeta : cientifico.getPlanetas()){
+            for (Planeta planeta : cientifico.getPlanetas()) {
                 DefaultMutableTreeNode hijoPlaneta = new DefaultMutableTreeNode(planeta);
                 root.add(hijoPlaneta);
             }
 
             arbolModelo.setRoot(root);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null,e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
     //actualizacion del comboBox
-    public void actualizarCientificosComboBox(){
-        DefaultComboBoxModel modelo = (DefaultComboBoxModel)cientificosCB.getModel();
+    public void actualizarCientificosComboBox() {
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) cientificosCB.getModel();
         modelo.removeAllElements();
-        for (Cientifico cientifico : listaCientificos)
+        for (Cientifico cientifico : listaCientificos) {
             modelo.addElement(cientifico);
+        }
     }
-    
-     private void loadCientificos(){
-        try{
+
+    private void loadCientificos() {
+        try {
             ObjectInputStream os = new ObjectInputStream(new FileInputStream("./Cientificos"));
             Cientifico cientifico;
-            while( (cientifico = (Cientifico)os.readObject()) != null )
+            while ((cientifico = (Cientifico) os.readObject()) != null) {
                 listaCientificos.add(cientifico);
-        }catch(IOException | ClassNotFoundException e){
+            }
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println(e);
         }
     }
-     
-     
-      public void setTreeVisible(){
-        DefaultTreeModel modelo = (DefaultTreeModel)arbolPlanetas.getModel();
+
+    public void setTreeVisible() {
+        DefaultTreeModel modelo = (DefaultTreeModel) arbolPlanetas.getModel();
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Planetas");
-        for (Planeta planeta : listaPlanetas){
+        for (Planeta planeta : listaPlanetas) {
             DefaultMutableTreeNode hijoPlaneta = new DefaultMutableTreeNode(planeta);
             root.add(hijoPlaneta);
         }
         modelo.setRoot(root);
     }
-       private void cientificoGuardado(){
-        try{
+
+    private void cientificoGuardado() {
+        try {
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("./Cientificos"));
-            for (Cientifico cientifico : listaCientificos)
+            for (Cientifico cientifico : listaCientificos) {
                 os.writeObject(cientifico);
-        }catch(IOException e){
+            }
+        } catch (IOException e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
         }
@@ -355,12 +381,12 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField nombreCientifico;
+    private javax.swing.JTextField planeta1TF;
+    private javax.swing.JTextField planeta2TF;
     private javax.swing.JCheckBox publicosCB;
     // End of variables declaration//GEN-END:variables
 Planeta planeta1;
-Planeta planeta2;
-HiloColision hiloColision;
+    Planeta planeta2;
+    HiloColision hiloColision;
 }
