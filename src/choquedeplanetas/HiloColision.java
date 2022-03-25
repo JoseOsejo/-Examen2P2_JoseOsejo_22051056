@@ -40,19 +40,33 @@ public class HiloColision extends Thread {
                 JOptionPane.showMessageDialog(null, "Finalizo");
                 barraPlaneta.setValue(0);
 
+                int tamanio = (planeta1.getTamanio() + planeta2.getTamanio()) / 2;
+                int randomColision = randomizer.nextInt(100) + 0;
                 int x = (planeta1.getX() + planeta2.getX()) / 2;
                 int y = (planeta1.getY() + planeta2.getY()) / 2;
                 int peso = (planeta1.getPeso() + planeta2.getPeso()) / 2;
-                int size = (planeta1.getTamanio()+ planeta2.getTamanio()) / 2;
-                int randomColision = randomizer.nextInt(100) + 0;
-                
-                
+
+                if (planeta2 instanceof PlanetaGaseoso) {
+                    if (randomColision <= 20) {
+                        JOptionPane.showMessageDialog(null, "Se creo un Planeta");
+                        String nombre = JOptionPane.showInputDialog("Ingrese Nombre del Planeta");
+                        PlanetaGaseoso gaseoso = new PlanetaGaseoso(nombre, peso, tamanio, x, y);
+                        cientifico.getPlanetas().add(gaseoso);
+                    }
+                } else if (planeta1 instanceof PlanetaTerrestre) {
+                    if (randomColision <= 25) {
+                        JOptionPane.showMessageDialog(null, "Se creo un Planeta");
+                        String nombre = JOptionPane.showInputDialog("Ingrese Nombre del Planeta");
+                        PlanetaTerrestre terrestre = new PlanetaTerrestre(nombre, peso, tamanio, x, y);
+                        cientifico.getPlanetas().add(terrestre);
+                    }
+                }
 
             }
 
             try {
                 Thread.sleep(5);
-            } catch (InterruptedException ex) {
+            } catch (InterruptedException e) {
             }
         }
     }
