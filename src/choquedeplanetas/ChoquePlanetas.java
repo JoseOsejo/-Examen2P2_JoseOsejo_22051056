@@ -5,6 +5,12 @@
  */
 package choquedeplanetas;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author jcoq2
@@ -14,8 +20,16 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     /**
      * Creates new form ChoquePlanetas
      */
+    
+    ArrayList<Planeta> listaPlanetas = new ArrayList();
+    ArrayList<Cientifico> listaCientificos = new ArrayList();
+
     public ChoquePlanetas() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        actualizarComboBox();
+        defaultPlanetas();
+        loadCientificos();
     }
 
     /**
@@ -38,7 +52,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cientificosCB = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -67,8 +81,6 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         jCheckBox1.setText("Publicos");
 
         jLabel1.setText("Cientificos");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel2.setText("Nombre");
 
@@ -100,7 +112,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
                             .addComponent(jTextField2)
                             .addComponent(jTextField1)
                             .addComponent(jLabel1)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cientificosCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2)
                             .addComponent(jTextField3)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
@@ -130,7 +142,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cientificosCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -184,7 +196,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -208,12 +220,49 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         });
     }
 
+    public void defaultPlanetas() {
+        PlanetaTerrestre mercurio = new PlanetaTerrestre("Mercurio", 13000, 5000, 400, 300);
+        listaPlanetas.add(mercurio);
+        PlanetaTerrestre venus = new PlanetaTerrestre("Venus", 15000, 100000, 640, 260);
+        listaPlanetas.add(venus);
+        PlanetaTerrestre tierra = new PlanetaTerrestre("Tierra", 17000, 140000, 760, 570);
+        listaPlanetas.add(tierra);
+        PlanetaTerrestre marte = new PlanetaTerrestre("Marte", 12000, 90000, 360, 360);
+        listaPlanetas.add(marte);
+        PlanetaGaseoso jupiter = new PlanetaGaseoso("Jupiter", 40000, 400000, 340, 310);
+        listaPlanetas.add(jupiter);
+        PlanetaGaseoso saturno = new PlanetaGaseoso("Saturno", 30000, 300000, 560, 450);
+        listaPlanetas.add(saturno);
+        PlanetaGaseoso urano = new PlanetaGaseoso("Urano", 20000, 200000, 670, 690);
+        listaPlanetas.add(urano);
+        PlanetaGaseoso neptuno = new PlanetaGaseoso("Neptuno", 20000, 200000, 840, 900);
+        listaPlanetas.add(neptuno);
+
+    }
+    //actualizacion del comboBox
+    public void actualizarComboBox(){
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel)cientificosCB.getModel();
+        modelo.removeAllElements();
+        for (Cientifico c : listaCientificos)
+            modelo.addElement(c);
+    }
+    
+     private void loadCientificos(){
+        try{
+            ObjectInputStream os = new ObjectInputStream(new FileInputStream("./Cientificos"));
+            Cientifico cientifico;
+            while( (cientifico = (Cientifico)os.readObject()) != null )
+                listaCientificos.add(cientifico);
+        }catch(IOException | ClassNotFoundException e){
+            System.out.println(e);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPopupMenu Planetas;
+    private javax.swing.JComboBox<String> cientificosCB;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuItem jMenuItem1;
@@ -226,4 +275,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
+Planeta planeta1;
+Planeta planeta2;
+HiloColision hiloColision;
 }
