@@ -28,6 +28,11 @@ public class Planeta implements Serializable {
         this.peso = peso;
     }
 
+     @Override
+    public String toString() {
+        return nombrePlaneta;
+    }
+    
     public int getX() {
         return x;
     }
@@ -70,9 +75,6 @@ public class Planeta implements Serializable {
 
    
 
-    @Override
-    public String toString() {
-        return nombrePlaneta;
-    }
+   
 
 }

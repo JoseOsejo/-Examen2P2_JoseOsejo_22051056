@@ -195,6 +195,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
  //actualizacion del comboBox
+
     public void actualizarCientificosComboBox() {
         DefaultComboBoxModel modelo = (DefaultComboBoxModel) cientificosCB.getModel();
         modelo.removeAllElements();
@@ -248,8 +249,8 @@ public class ChoquePlanetas extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) arbolPlanetas.getLastSelectedPathComponent();
-            planeta1 = (Planeta) selectedNode.getUserObject();
+            DefaultMutableTreeNode hijoSeleccionado = (DefaultMutableTreeNode) arbolPlanetas.getLastSelectedPathComponent();
+            planeta1 = (Planeta) hijoSeleccionado.getUserObject();
             planeta1TF.setText(planeta1.toString());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -261,7 +262,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         //Planetas por default
         if (publicosCB.isSelected()) {
             setTreeVisible();
-        }else{
+        } else {
             //Planetas descubiertos por los cientificos
             planetasDescubiertosCientificos();
         }
@@ -281,8 +282,8 @@ public class ChoquePlanetas extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         try {
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) arbolPlanetas.getLastSelectedPathComponent();
-            planeta2 = (Planeta) selectedNode.getUserObject();
+            DefaultMutableTreeNode hijoSeleccionado = (DefaultMutableTreeNode) arbolPlanetas.getLastSelectedPathComponent();
+            planeta2 = (Planeta) hijoSeleccionado.getUserObject();
             planeta2TF.setText(planeta2.toString());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -292,27 +293,27 @@ public class ChoquePlanetas extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Validiacion de los planetas nulos
-        if(planeta1 == null || planeta2 == null){
+        if (planeta1 == null || planeta2 == null) {
             JOptionPane.showMessageDialog(null, "No hay planetas para colisionar");
-        }else{
-            try{
+        } else {
+            try {
                 double y = Math.pow(planeta1.getY() - planeta2.getY(), 2);
-                double x = Math.pow(planeta1.getX() - planeta2.getX(), 2); 
+                double x = Math.pow(planeta1.getX() - planeta2.getX(), 2);
                 double totalRecorrido = x + y;
                 double distance = Math.sqrt(totalRecorrido);
                 //redondea la distancia al numero mas cercano
                 int distance1 = (int) Math.round(distance);
-                colisionPB.setMaximum(distance1); 
+                colisionPB.setMaximum(distance1);
                 Cientifico cientifico = (Cientifico) cientificosCB.getSelectedItem();
                 //instancia del hilo de la colision
                 HiloColision hiloColision = new HiloColision(colisionPB, planeta1, planeta2, cientifico);
                 hiloColision.start();
                 cientificoGuardado();
-            }catch (Exception e){
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -352,7 +353,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     }
 
     public void defaultPlanetas() {
-        
+
         PlanetaGaseoso Planetasaturno = new PlanetaGaseoso("Saturno", 30000, 300000, 560, 450);
         listaPlanetas.add(Planetasaturno);
         PlanetaGaseoso Planetaurano = new PlanetaGaseoso("Urano", 20000, 200000, 670, 690);
@@ -392,8 +393,6 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         }
     }
 
-   
-
     private void cientificoGuardado() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("./Cientificos"));
@@ -424,6 +423,6 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     private javax.swing.JCheckBox publicosCB;
     // End of variables declaration//GEN-END:variables
 Planeta planeta1;
-Planeta planeta2;
+    Planeta planeta2;
 
 }
