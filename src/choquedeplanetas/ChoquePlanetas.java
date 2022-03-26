@@ -258,9 +258,12 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void publicosCBStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_publicosCBStateChanged
-
+        //Planetas por default
         if (publicosCB.isSelected()) {
             setTreeVisible();
+        }else{
+            //Planetas descubiertos por los cientificos
+            planetasDescubiertosCientificos();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_publicosCBStateChanged
@@ -302,7 +305,8 @@ public class ChoquePlanetas extends javax.swing.JFrame {
                 colisionPB.setMaximum(distance1); 
                 Cientifico cientifico = (Cientifico) cientificosCB.getSelectedItem();
                 //instancia del hilo de la colision
-                
+                HiloColision hiloColision = new HiloColision(colisionPB, planeta1, planeta2, cientifico);
+                hiloColision.start();
                 cientificoGuardado();
             }catch (Exception e){
                 JOptionPane.showMessageDialog(null, e);
