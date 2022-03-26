@@ -49,7 +49,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        colisionPB = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         arbolPlanetas = new javax.swing.JTree();
         publicosCB = new javax.swing.JCheckBox();
@@ -114,6 +114,11 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         });
 
         jButton2.setText("Colisionar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,7 +128,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(colisionPB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +151,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(colisionPB, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -189,7 +194,36 @@ public class ChoquePlanetas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+ //actualizacion del comboBox
+    public void actualizarCientificosComboBox() {
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) cientificosCB.getModel();
+        modelo.removeAllElements();
+        for (Cientifico cientifico : listaCientificos) {
+            modelo.addElement(cientifico);
+        }
+    }
 
+    private void loadCientificos() {
+        try {
+            ObjectInputStream os = new ObjectInputStream(new FileInputStream("./Cientificos"));
+            Cientifico cientifico;
+            while ((cientifico = (Cientifico) os.readObject()) != null) {
+                listaCientificos.add(cientifico);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void setTreeVisible() {
+        DefaultTreeModel modelo = (DefaultTreeModel) arbolPlanetas.getModel();
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Planetas");
+        for (Planeta planeta : listaPlanetas) {
+            DefaultMutableTreeNode hijoPlaneta = new DefaultMutableTreeNode(planeta);
+            root.add(hijoPlaneta);
+        }
+        modelo.setRoot(root);
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (nombreCientifico.getText().isEmpty()) {
         } else {
@@ -252,6 +286,31 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //Validiacion de los planetas nulos
+        if(planeta1 == null || planeta2 == null){
+            JOptionPane.showMessageDialog(null, "No hay planetas para colisionar");
+        }else{
+            try{
+                double y = Math.pow(planeta1.getY() - planeta2.getY(), 2);
+                double x = Math.pow(planeta1.getX() - planeta2.getX(), 2); 
+                double totalRecorrido = x + y;
+                double distance = Math.sqrt(totalRecorrido);
+                //redondea la distancia al numero mas cercano
+                int distance1 = (int) Math.round(distance);
+                colisionPB.setMaximum(distance1); 
+                Cientifico cientifico = (Cientifico) cientificosCB.getSelectedItem();
+                //instancia del hilo de la colision
+                
+                cientificoGuardado();
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,36 +386,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
         }
     }
 
-    //actualizacion del comboBox
-    public void actualizarCientificosComboBox() {
-        DefaultComboBoxModel modelo = (DefaultComboBoxModel) cientificosCB.getModel();
-        modelo.removeAllElements();
-        for (Cientifico cientifico : listaCientificos) {
-            modelo.addElement(cientifico);
-        }
-    }
-
-    private void loadCientificos() {
-        try {
-            ObjectInputStream os = new ObjectInputStream(new FileInputStream("./Cientificos"));
-            Cientifico cientifico;
-            while ((cientifico = (Cientifico) os.readObject()) != null) {
-                listaCientificos.add(cientifico);
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println(e);
-        }
-    }
-
-    public void setTreeVisible() {
-        DefaultTreeModel modelo = (DefaultTreeModel) arbolPlanetas.getModel();
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Planetas");
-        for (Planeta planeta : listaPlanetas) {
-            DefaultMutableTreeNode hijoPlaneta = new DefaultMutableTreeNode(planeta);
-            root.add(hijoPlaneta);
-        }
-        modelo.setRoot(root);
-    }
+   
 
     private void cientificoGuardado() {
         try {
@@ -373,6 +403,7 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     private javax.swing.JPopupMenu Planetas;
     private javax.swing.JTree arbolPlanetas;
     private javax.swing.JComboBox<String> cientificosCB;
+    private javax.swing.JProgressBar colisionPB;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -380,7 +411,6 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nombreCientifico;
     private javax.swing.JTextField planeta1TF;
@@ -389,5 +419,5 @@ public class ChoquePlanetas extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 Planeta planeta1;
 Planeta planeta2;
-HiloColision hiloColision;
+
 }

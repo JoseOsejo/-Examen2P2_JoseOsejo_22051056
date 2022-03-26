@@ -35,19 +35,21 @@ public class HiloColision extends Thread {
     public void run() {
         while (yaExiste) {
             barraPlaneta.setValue(barraPlaneta.getValue() + 1);
+            //a la barra de colision se le suma cada vez 1 de progreso
             if (barraPlaneta.getValue() == barraPlaneta.getMaximum()) {
                 yaExiste = false;
                 JOptionPane.showMessageDialog(null, "Finalizo");
                 barraPlaneta.setValue(0);
-
+                
                 int tamanio = (planeta1.getTamanio() + planeta2.getTamanio()) / 2;
                 int randomColision = randomizer.nextInt(100) + 0;
                 int x = (planeta1.getX() + planeta2.getX()) / 2;
                 int y = (planeta1.getY() + planeta2.getY()) / 2;
                 int peso = (planeta1.getPeso() + planeta2.getPeso()) / 2;
-
+                //validando la instancia de si es planeta gaseoso o terrestre
                 if (planeta2 instanceof PlanetaGaseoso) {
                     if (randomColision <= 20) {
+                        //segun la probabilidad se creara un nuevo planeta
                         JOptionPane.showMessageDialog(null, "Se creo un Planeta");
                         String nombre = JOptionPane.showInputDialog("Ingrese Nombre del Planeta");
                         PlanetaGaseoso gaseoso = new PlanetaGaseoso(nombre, peso, tamanio, x, y);
@@ -65,6 +67,7 @@ public class HiloColision extends Thread {
             }
 
             try {
+                //descanso del hilo 5 milisegundos
                 Thread.sleep(5);
             } catch (InterruptedException e) {
             }
