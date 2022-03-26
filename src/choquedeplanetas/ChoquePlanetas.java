@@ -353,22 +353,24 @@ public class ChoquePlanetas extends javax.swing.JFrame {
 
     public void defaultPlanetas() {
         
-        PlanetaGaseoso saturno = new PlanetaGaseoso("Saturno", 30000, 300000, 560, 450);
-        listaPlanetas.add(saturno);
-        PlanetaGaseoso urano = new PlanetaGaseoso("Urano", 20000, 200000, 670, 690);
-        listaPlanetas.add(urano);
-        PlanetaGaseoso neptuno = new PlanetaGaseoso("Neptuno", 20000, 200000, 840, 900);
-        listaPlanetas.add(neptuno);
-        PlanetaTerrestre mercurio = new PlanetaTerrestre("Mercurio", 13000, 5000, 400, 300);
-        listaPlanetas.add(mercurio);
-        PlanetaTerrestre venus = new PlanetaTerrestre("Venus", 15000, 100000, 640, 260);
-        listaPlanetas.add(venus);
-        PlanetaTerrestre tierra = new PlanetaTerrestre("Tierra", 17000, 140000, 760, 570);
-        listaPlanetas.add(tierra);
-        PlanetaTerrestre marte = new PlanetaTerrestre("Marte", 12000, 90000, 360, 360);
-        listaPlanetas.add(marte);
-        PlanetaGaseoso jupiter = new PlanetaGaseoso("Jupiter", 40000, 400000, 340, 310);
-        listaPlanetas.add(jupiter);
+        PlanetaGaseoso Planetasaturno = new PlanetaGaseoso("Saturno", 30000, 300000, 560, 450);
+        listaPlanetas.add(Planetasaturno);
+        PlanetaGaseoso Planetaurano = new PlanetaGaseoso("Urano", 20000, 200000, 670, 690);
+        listaPlanetas.add(Planetaurano);
+        PlanetaGaseoso Planetaneptuno = new PlanetaGaseoso("Neptuno", 20000, 200000, 840, 900);
+        listaPlanetas.add(Planetaneptuno);
+        PlanetaTerrestre Planetamercurio = new PlanetaTerrestre("Mercurio", 13000, 5000, 400, 300);
+        listaPlanetas.add(Planetamercurio);
+        PlanetaTerrestre Planetavenus = new PlanetaTerrestre("Venus", 15000, 100000, 640, 260);
+        listaPlanetas.add(Planetavenus);
+        PlanetaTerrestre Planetatierra = new PlanetaTerrestre("Tierra", 17000, 140000, 760, 570);
+        listaPlanetas.add(Planetatierra);
+        PlanetaTerrestre Planetamarte = new PlanetaTerrestre("Marte", 12000, 90000, 360, 360);
+        listaPlanetas.add(Planetamarte);
+        PlanetaGaseoso Planetajupiter = new PlanetaGaseoso("Jupiter", 40000, 400000, 340, 310);
+        listaPlanetas.add(Planetajupiter);
+        PlanetaTerrestre planetaVeggeta = new PlanetaTerrestre("PlanetaVeggeta", 30000, 5432, 4724, 430);
+        listaPlanetas.add(planetaVeggeta);
 
     }
 
